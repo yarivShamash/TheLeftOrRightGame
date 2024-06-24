@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { GameBox } from "../../components/GameBox";
 
-import { getObjectDirection, randomizeCoordinates } from "./utils";
+import { getPuckDirection, randomizeCoordinates } from "./utils";
+import { KEY_TO_DIRECTION, USER_INTERACTIONS } from "./consts";
 
 export const Game = () => {
   const [gameBoxDimensions, setGameBoxDimensions] = useState<DOMRect>();
@@ -12,19 +13,34 @@ export const Game = () => {
     return gameBoxDimensions.x + gameBoxDimensions.width / 2;
   }, [gameBoxDimensions]);
 
-  const puckLocation = useMemo(
-    () => randomizeCoordinates(gameBoxDimensions),
-    [gameBoxDimensions]
-  );
+  const puckLocation = useMemo(() => {
+    return randomizeCoordinates(gameBoxDimensions);
+  }, [gameBoxDimensions]);
 
-  const puckDirection = getObjectDirection(puckLocation, gameBoxCenterX);
-  console.log("🚀 > Game >objectDirection:", puckDirection);
+  const puckDirection = getPuckDirection(puckLocation, gameBoxCenterX);
 
   const gameBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setGameBoxDimensions(gameBoxRef.current?.getBoundingClientRect());
   }, [gameBoxRef]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (KEY_TO_DIRECTION[event.key] === puckDirection) {
+        console.log(USER_INTERACTIONS["Right Key"]);
+      }
+      if (KEY_TO_DIRECTION[event.key] !== puckDirection) {
+        console.log(USER_INTERACTIONS["Wrong Key"]);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <>

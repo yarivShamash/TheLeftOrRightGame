@@ -12,10 +12,10 @@ export const randomizeCoordinates = (gameBoxDimensions?: DOMRect) => {
   };
 };
 
-export const getObjectDirection = (
-  gameObjectLocation: { x: number; y: number },
+export const getPuckDirection = (
+  puckLocation: { x: number; y: number },
   gameBoxCenterX: number
 ) => {
-  if (gameObjectLocation.x < gameBoxCenterX) return "left";
-  if (gameObjectLocation.x > gameBoxCenterX) return "right";
+  if (puckLocation.x < gameBoxCenterX) return "left";
+  if (puckLocation.x > gameBoxCenterX) return "right";
 };
