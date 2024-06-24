@@ -37,6 +37,7 @@ const saveName = async (req: Request, res: Response) => {
       cell,
       nat,
       picture,
+      points: 0,
     });
     res.status(200).json({ message: "Name saved successfully" });
   } catch (error) {
