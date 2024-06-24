@@ -3,7 +3,6 @@ import admin from "firebase-admin";
 import User from "../models/userModel";
 import { firebaseConfig } from "../config/firebaseConfig";
 
-// Initialize Firebase (only if not already initialized elsewhere)
 if (!admin.apps.length) {
   admin.initializeApp(firebaseConfig);
 }
@@ -12,7 +11,6 @@ const db = admin.firestore();
 
 const saveName = async (req: Request, res: Response) => {
   const { name }: User = req.body;
-  console.log("🚀 > saveName > name:", name);
 
   try {
     await db.collection("users").add({ name });

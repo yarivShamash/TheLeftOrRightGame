@@ -15,11 +15,10 @@ export const Home = () => {
     e.preventDefault();
 
     try {
-      const response = await api.post("/", {
-        // method: "POST",
+      const response = await api.post("/user", {
         headers: { "Content-Type": "application/json" },
         // @ts-expect-error This is expected due to the structure of the event object.
-        body: JSON.stringify({ name: e.target.name.value }),
+        name: e.target.name.value,
       });
 
       if (response.status === 200) {
