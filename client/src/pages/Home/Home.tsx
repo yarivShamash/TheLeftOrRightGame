@@ -1,18 +1,36 @@
 import { FormEventHandler } from "react";
-import { FormContainer } from "./styles";
 import { useNavigate } from "@tanstack/react-router";
+
+import api from "../../axiosconfig";
+import { FormContainer } from "./styles";
 
 interface UserForm extends HTMLFormElement {
   name: string;
 }
 export const Home = () => {
   const navigate = useNavigate();
+  // const [userName, setUserName]  = useState("");
 
-  const handleSubmit: FormEventHandler<UserForm> = (e) => {
+  const handleSubmit: FormEventHandler<UserForm> = async (e) => {
     e.preventDefault();
-    // @ts-expect-error This is expected due to the structure of the event object.
-    console.log(e.target.name.value);
-    navigate({ to: "/game" });
+
+    try {
+      const response = await api.post("/", {
+        // method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // @ts-expect-error This is expected due to the structure of the event object.
+        body: JSON.stringify({ name: e.target.name.value }),
+      });
+
+      if (response.status === 200) {
+        console.log("Name saved successfully!", response);
+        navigate({ to: "/game" });
+      } else {
+        console.error("Error saving name:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   };
 
   return (
