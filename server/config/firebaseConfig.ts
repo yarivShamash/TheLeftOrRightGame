@@ -2,9 +2,9 @@ import { initializeApp } from "firebase/app";
 import dotenv from "dotenv";
 
 import { ServiceAccount, credential } from "firebase-admin";
-import serviceAccount from "./serviceAccountKey.json";
 
 dotenv.config({ path: ".env.local" });
+const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS || "{}");
 
 export const firebaseConfig = {
   credential: credential.cert(serviceAccount as ServiceAccount),
