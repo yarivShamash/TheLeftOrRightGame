@@ -2,11 +2,10 @@ import { FormEventHandler, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 import api from "../../axiosconfig";
-import { FormContainer } from "./styles";
 
-interface UserForm extends HTMLFormElement {
-  name: string;
-}
+import { FormContainer } from "./styles";
+import { UserForm } from "./types";
+
 export const Home = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
