@@ -1,10 +1,10 @@
 import express from "express";
 import userController from "../controllers/userController";
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post("/user", userController.saveName);
+userRouter.post("/user", userController.saveName);
 
-router.post("/addOnePoint", userController.addPointToUser);
+userRouter.post("/addOnePoint", userController.addPointToUser);
 
-export default router;
+export default userRouter;

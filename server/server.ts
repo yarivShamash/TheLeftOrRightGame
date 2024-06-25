@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { Application, Request, Response } from "express";
 
 import userRoutes from "./routes/userRoutes";
+import leaderboardRoutes from "./routes/leaderboardRoutes";
 import { SERVER_LOCAL_PORT } from "./consts";
 
 const app: Application = express();
@@ -17,6 +18,7 @@ app.use(
 
 app.use(express.json());
 app.use(userRoutes);
+app.use(leaderboardRoutes);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Hello from Express & TypeScript!");
