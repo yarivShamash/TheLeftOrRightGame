@@ -109,7 +109,7 @@ export const Game = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [gamesPlayed, puckDirection, playGame, addPointToUser]);
+  }, [gamesPlayed, puckDirection, playGame]);
 
   if (!user) return <NoUser />;
 
