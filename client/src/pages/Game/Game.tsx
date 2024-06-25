@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTimeoutFn } from "react-use";
 
-import { GameBox } from "../../components/GameBox";
+import { Puck } from "../../components/Puck";
 import { WaitingScreen } from "../../components/WaitingScreen";
 
 import {
@@ -14,7 +14,7 @@ import { Coordinates, PuckDirection, UserInteractionResult } from "./types";
 import { getPuckDirection, randomizeCoordinates } from "./utils";
 
 export const Game = () => {
-  const [startGame, setStartGame] = useState(false);
+  const [playGame, setPlayGame] = useState(false);
   const [gamesPlayed, setGamesPlayed] = useState(0);
   const [gameBoxDimensions, setGameBoxDimensions] = useState<DOMRect>();
   const [puckPosition, setPuckPosition] = useState<Coordinates>(
@@ -37,22 +37,22 @@ export const Game = () => {
     GAME_START_AFTER.min;
 
   useTimeoutFn(() => {
-    if (startGame) return;
+    if (playGame) return;
     setUserInteractionResult(null);
-    setStartGame(true);
+    setPlayGame(true);
     setGamesPlayed(gamesPlayed + 1);
   }, startGameIn);
 
   useEffect(() => {
-    if (!startGame) return;
+    if (!playGame) return;
 
     const gameEndTimeout = setTimeout(() => {
-      setStartGame(false);
+      setPlayGame(false);
       setPuckPosition(randomizeCoordinates(gameBoxDimensions));
     }, 1_000);
 
     return () => clearTimeout(gameEndTimeout);
-  }, [startGame, gameBoxDimensions]);
+  }, [playGame, gameBoxDimensions]);
 
   useEffect(() => {
     if (!puckPosition.x || !gameBoxCenterX) return;
@@ -86,13 +86,14 @@ export const Game = () => {
         ? { text: "Right Key", success: true }
         : { text: "Wrong Key", success: false };
 
-      if (!startGame && !gamesPlayed) {
+      if (!playGame && !gamesPlayed) {
         result = { text: "Too Soon", success: false };
-      } else if (!startGame) {
+      } else if (!playGame) {
         result = { text: "Too Late", success: false };
       }
 
       setUserInteractionResult(result);
+      setPlayGame(false);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -100,14 +101,14 @@ export const Game = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [gamesPlayed, puckDirection, startGame]);
+  }, [gamesPlayed, puckDirection, playGame]);
 
   return (
     <GameContainer>
       <GameTitle>Left or Right?</GameTitle>
       <GameArea ref={gameBoxRef}>
-        {startGame ? (
-          <GameBox puckLocation={puckPosition} />
+        {playGame ? (
+          <Puck puckLocation={puckPosition} />
         ) : (
           <WaitingScreen userInteractionResult={userInteractionResult} />
         )}
