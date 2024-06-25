@@ -1,6 +1,6 @@
 import { Box } from "@radix-ui/themes";
 import styled from "styled-components";
-import { PUCK_DIMENSIONS } from "../../pages/Game/consts";
+import { PUCK_DIMENSIONS } from "../GameBox/consts";
 
 interface PuckProps {
   $puckLocation: { x: number; y: number };

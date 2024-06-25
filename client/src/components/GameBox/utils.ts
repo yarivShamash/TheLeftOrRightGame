@@ -1,4 +1,4 @@
-import { PUCK_DIMENSIONS } from "./consts";
+import { PUCK_DIMENSIONS } from "../../components/GameBox/consts";
 import { Coordinates, PuckDirection } from "./types";
 
 export const randomizeCoordinates = (

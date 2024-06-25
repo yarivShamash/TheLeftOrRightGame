@@ -11,9 +11,3 @@ export const GameTitle = styled(Heading)`
   padding: 2rem;
   color: white;
 `;
-
-export const GameArea = styled(Flex)`
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-`;
