@@ -1,47 +1,34 @@
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
-import api from "../../axiosconfig";
-
-import { FormContainer } from "./styles";
+import { FormContainer, Input, LoadingTitle, SubmitButton } from "./styles";
 import { UserForm } from "./types";
+import { useUser } from "../../providers/UserProvider";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading, getUser } = useUser();
 
   const handleSubmit: FormEventHandler<UserForm> = async (e) => {
     e.preventDefault();
 
     try {
-      setIsLoading(true);
-      const response = await api.post("/user", {
-        headers: { "Content-Type": "application/json" },
-        // @ts-expect-error This is expected due to the structure of the event object.
-        name: e.target.name.value,
-      });
-
-      if (response.status === 200) {
-        setIsLoading(false);
-        navigate({ to: "/game" });
-      } else {
-        setIsLoading(false);
-        console.error("Error saving name:", response.statusText);
-      }
+      // @ts-expect-error This is expected due to the structure of the event object.
+      await getUser(e.target.name.value);
+      navigate({ to: "/game" });
     } catch (error) {
-      setIsLoading(false);
-      console.error("Network error:", error);
+      console.error("error getting user:", error);
     }
   };
 
   return (
     <FormContainer onSubmit={handleSubmit}>
-      {isLoading ? (
-        <h3>LOADING..</h3>
+      {loading ? (
+        <LoadingTitle>LOADING..</LoadingTitle>
       ) : (
         <>
-          <input placeholder="What's your name?" type="text" name="name" />
-          <input type="submit" value="START" />
+          <Input placeholder="Hey, what's your name?" type="text" name="name" />
+          <SubmitButton type="submit" value="START" />
         </>
       )}
     </FormContainer>

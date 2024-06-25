@@ -29,7 +29,7 @@ interface Timezone {
   description: string;
 }
 
-interface User {
+export interface User {
   id: string;
   name: string;
   gender: string;
@@ -41,5 +41,3 @@ interface User {
   picture: UserPicture;
   points: number;
 }
-
-export default User;
