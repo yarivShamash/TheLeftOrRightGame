@@ -16,6 +16,8 @@ import { getPuckDirection, randomizeCoordinates } from "./utils";
 export const Game = () => {
   const [playGame, setPlayGame] = useState(false);
   const [gamesPlayed, setGamesPlayed] = useState(0);
+  console.log("🚀 > Game > gamesPlayed:", gamesPlayed);
+
   const [gameBoxDimensions, setGameBoxDimensions] = useState<DOMRect>();
   const [puckPosition, setPuckPosition] = useState<Coordinates>(
     INITIAL_PUCK_POSITION

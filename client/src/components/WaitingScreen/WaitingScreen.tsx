@@ -12,17 +12,13 @@ interface WaitingScreenProps {
 
 export const WaitingScreen = ({
   userInteractionResult,
-}: WaitingScreenProps) => {
-  console.log("🚀 > userInteractionResult:", userInteractionResult);
-
-  return (
-    <WaitingScreenContainer>
-      <WaitingText>Wait for it </WaitingText>
-      {userInteractionResult?.text && (
-        <ResultBanner $success={userInteractionResult.success}>
-          <ResultText>{userInteractionResult.text}</ResultText>
-        </ResultBanner>
-      )}
-    </WaitingScreenContainer>
-  );
-};
+}: WaitingScreenProps) => (
+  <WaitingScreenContainer>
+    <WaitingText>Wait for it </WaitingText>
+    {userInteractionResult?.text && (
+      <ResultBanner $success={userInteractionResult.success}>
+        <ResultText>{userInteractionResult.text}</ResultText>
+      </ResultBanner>
+    )}
+  </WaitingScreenContainer>
+);
