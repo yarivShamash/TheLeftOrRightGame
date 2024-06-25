@@ -3,6 +3,7 @@ import { Theme as RadixTheme } from "@radix-ui/themes";
 
 import { Flex } from "@radix-ui/themes";
 import styled from "styled-components";
+import { UserProvider } from "../providers/UserProvider";
 
 export const PageContainer = styled(Flex)`
   position: fixed;
@@ -14,9 +15,11 @@ export const PageContainer = styled(Flex)`
 export const Route = createRootRoute({
   component: () => (
     <RadixTheme>
-      <PageContainer>
-        <Outlet />
-      </PageContainer>
+      <UserProvider>
+        <PageContainer>
+          <Outlet />
+        </PageContainer>
+      </UserProvider>
     </RadixTheme>
   ),
 });

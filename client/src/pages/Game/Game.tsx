@@ -3,6 +3,7 @@ import { useTimeoutFn } from "react-use";
 
 import { Puck } from "../../components/Puck";
 import { WaitingScreen } from "../../components/WaitingScreen";
+import { useUser } from "../../providers/UserProvider";
 
 import {
   GAME_START_AFTER,
@@ -16,8 +17,6 @@ import { getPuckDirection, randomizeCoordinates } from "./utils";
 export const Game = () => {
   const [playGame, setPlayGame] = useState(false);
   const [gamesPlayed, setGamesPlayed] = useState(0);
-  console.log("🚀 > Game > gamesPlayed:", gamesPlayed);
-
   const [gameBoxDimensions, setGameBoxDimensions] = useState<DOMRect>();
   const [puckPosition, setPuckPosition] = useState<Coordinates>(
     INITIAL_PUCK_POSITION
@@ -26,6 +25,8 @@ export const Game = () => {
     useState<PuckDirection>("unassigned");
   const [userInteractionResult, setUserInteractionResult] =
     useState<UserInteractionResult | null>(null);
+
+  const { addPointToUser } = useUser();
 
   const gameBoxRef = useRef<HTMLDivElement>(null);
 
@@ -84,9 +85,13 @@ export const Game = () => {
       const keyDirection = KEY_TO_DIRECTION[event.key];
       const isCorrectKey = keyDirection === puckDirection;
 
-      let result: UserInteractionResult = isCorrectKey
-        ? { text: "Right Key", success: true }
-        : { text: "Wrong Key", success: false };
+      let result: UserInteractionResult;
+      if (isCorrectKey) {
+        result = { text: "Right Key", success: true };
+        addPointToUser();
+      } else {
+        result = { text: "Wrong Key", success: false };
+      }
 
       if (!playGame && !gamesPlayed) {
         result = { text: "Too Soon", success: false };
