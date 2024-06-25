@@ -18,7 +18,7 @@ import { getPuckDirection, randomizeCoordinates } from "./utils";
 
 export const GameBox = () => {
   const [playGame, setPlayGame] = useState(false);
-  const [gamesPlayed, setGamesPlayed] = useState(0);
+  const [isFirstMatch, setIsFirstMatch] = useState(true);
   const [gameBoxDimensions, setGameBoxDimensions] = useState<DOMRect>();
   const [puckPosition, setPuckPosition] = useState<Coordinates>(
     INITIAL_PUCK_POSITION
@@ -41,11 +41,16 @@ export const GameBox = () => {
     Math.floor(Math.random() * GAME_START_AFTER.max - GAME_START_AFTER.min) +
     GAME_START_AFTER.min;
 
+  const setNewPuckPosition = () => {
+    const newPuckPosition = randomizeCoordinates(gameBoxDimensions);
+    setPuckPosition(newPuckPosition);
+  };
+
   useTimeoutFn(() => {
     if (playGame) return;
     setUserInteractionResult(null);
     setPlayGame(true);
-    setGamesPlayed(gamesPlayed + 1);
+    setIsFirstMatch(false);
   }, startGameIn);
 
   useEffect(() => {
@@ -53,10 +58,13 @@ export const GameBox = () => {
 
     const gameEndTimeout = setTimeout(() => {
       setPlayGame(false);
-      setPuckPosition(randomizeCoordinates(gameBoxDimensions));
+
+      setNewPuckPosition();
     }, 1_000);
 
     return () => clearTimeout(gameEndTimeout);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playGame, gameBoxDimensions]);
 
   useEffect(() => {
@@ -74,8 +82,10 @@ export const GameBox = () => {
     if (puckPosition.x && puckPosition.y) {
       setPuckPosition({ x: puckPosition.x, y: puckPosition.y });
     } else {
-      setPuckPosition(randomizeCoordinates(gameBoxDimensions));
+      setNewPuckPosition();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameBoxDimensions, puckPosition.x, puckPosition.y]);
 
   useEffect(() => {
@@ -96,13 +106,14 @@ export const GameBox = () => {
         result = { text: "Wrong Key", success: false };
       }
 
-      if (!playGame && !gamesPlayed) {
+      if (!playGame && isFirstMatch) {
         result = { text: "Too Soon", success: false };
       } else if (!playGame) {
         result = { text: "Too Late", success: false };
       }
 
       setUserInteractionResult(result);
+      setNewPuckPosition();
       setPlayGame(false);
     };
 
@@ -112,7 +123,7 @@ export const GameBox = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gamesPlayed, puckDirection, playGame]);
+  }, [isFirstMatch, puckDirection, playGame]);
 
   if (!user) return <NoUser />;
 
