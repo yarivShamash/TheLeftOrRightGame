@@ -12,7 +12,7 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-const saveName = async (req: Request, res: Response) => {
+const saveUser = async (req: Request, res: Response) => {
   const { name }: User = req.body;
 
   try {
@@ -24,6 +24,7 @@ const saveName = async (req: Request, res: Response) => {
     const randomuserResponse = await axios.get(
       `https://randomuser.me/api/?gender=${gender}&name=${name}`
     );
+
     const { email, location, phone, cell, nat, picture } = JSON.parse(
       JSON.stringify(randomuserResponse.data)
     ).results[0];
@@ -44,7 +45,7 @@ const saveName = async (req: Request, res: Response) => {
 
     const userData = userDoc.data();
 
-    res.status(200).json({ user: userData });
+    res.status(200).json({ user: { ...userData, id: userDoc.id } });
   } catch (error) {
     console.error("Error saving name:", error);
     res.status(500).json({ error: "Failed to save name" });
@@ -53,7 +54,6 @@ const saveName = async (req: Request, res: Response) => {
 
 const addPointToUser = async (req: Request, res: Response) => {
   const { id }: User = req.body;
-  console.log("🚀 > addUserSuccess > id:", id);
 
   try {
     await db
@@ -69,4 +69,4 @@ const addPointToUser = async (req: Request, res: Response) => {
   }
 };
 
-export default { saveName, addPointToUser };
+export default { saveName: saveUser, addPointToUser };
