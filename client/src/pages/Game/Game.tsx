@@ -4,22 +4,43 @@ import { GameBox } from "../../components/GameBox";
 
 import { getPuckDirection, randomizeCoordinates } from "./utils";
 import { KEY_TO_DIRECTION, USER_INTERACTIONS } from "./consts";
+import { PuckDirection, Coordinates } from "./types";
+
+const initialPuckLocation = { x: 0, y: 0 };
 
 export const Game = () => {
   const [gameBoxDimensions, setGameBoxDimensions] = useState<DOMRect>();
+  const [puckLocation, setPuckLocation] =
+    useState<Coordinates>(initialPuckLocation);
+
+  const [puckDirection, setPuckDirection] =
+    useState<PuckDirection>("unassigned");
+
+  const gameBoxRef = useRef<HTMLDivElement>(null);
 
   const gameBoxCenterX = useMemo(() => {
     if (!gameBoxDimensions) return 0;
     return gameBoxDimensions.x + gameBoxDimensions.width / 2;
   }, [gameBoxDimensions]);
 
-  const puckLocation = useMemo(() => {
-    return randomizeCoordinates(gameBoxDimensions);
-  }, [gameBoxDimensions]);
+  useEffect(() => {
+    if (!puckLocation.x || !gameBoxCenterX) return;
+    const calculatedPuckDirection = getPuckDirection(
+      puckLocation,
+      gameBoxCenterX
+    );
 
-  const puckDirection = getPuckDirection(puckLocation, gameBoxCenterX);
+    setPuckDirection(calculatedPuckDirection);
+  }, [puckLocation, gameBoxCenterX]);
 
-  const gameBoxRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!gameBoxDimensions) setPuckLocation(initialPuckLocation);
+    if (puckLocation.x && puckLocation.y) {
+      setPuckLocation({ x: puckLocation.x, y: puckLocation.y });
+    } else {
+      setPuckLocation(randomizeCoordinates(gameBoxDimensions));
+    }
+  }, [gameBoxDimensions, puckLocation.x, puckLocation.y]);
 
   useEffect(() => {
     setGameBoxDimensions(gameBoxRef.current?.getBoundingClientRect());
@@ -40,7 +61,7 @@ export const Game = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [puckDirection]);
 
   return (
     <>
@@ -50,3 +71,11 @@ export const Game = () => {
     </>
   );
 };
+
+/**
+ * Understand why the puck direction doesn't work :/
+ *
+ *
+ * UI:
+ * Toast
+ */

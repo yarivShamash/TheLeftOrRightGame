@@ -9,7 +9,12 @@ export const GameBox = forwardRef<HTMLDivElement, GameBoxProps>(
   ({ puckLocation }, ref) => {
     return (
       <Container ref={ref}>
-        {puckLocation && <Puck $puckLocation={puckLocation} />}
+        {puckLocation && (
+          <Puck
+            style={{ top: puckLocation.y, left: puckLocation.x }}
+            $puckLocation={puckLocation}
+          />
+        )}
       </Container>
     );
   }

@@ -1,6 +1,9 @@
 import { PUCK_DIMENSIONS } from "./consts";
+import { Coordinates, PuckDirection } from "./types";
 
-export const randomizeCoordinates = (gameBoxDimensions?: DOMRect) => {
+export const randomizeCoordinates = (
+  gameBoxDimensions?: DOMRect
+): Coordinates => {
   if (!gameBoxDimensions) return { x: 0, y: 0 };
 
   const maxX = gameBoxDimensions.width - PUCK_DIMENSIONS;
@@ -13,9 +16,12 @@ export const randomizeCoordinates = (gameBoxDimensions?: DOMRect) => {
 };
 
 export const getPuckDirection = (
-  puckLocation: { x: number; y: number },
+  puckLocation: Coordinates,
   gameBoxCenterX: number
-) => {
-  if (puckLocation.x < gameBoxCenterX) return "left";
-  if (puckLocation.x > gameBoxCenterX) return "right";
+): PuckDirection => {
+  const puckCenterX = puckLocation.x + PUCK_DIMENSIONS / 2;
+
+  if (puckCenterX <= gameBoxCenterX) return "left";
+  if (puckCenterX > gameBoxCenterX) return "right";
+  return "unassigned";
 };

@@ -15,8 +15,8 @@ export const Container = styled(Flex)`
 
 export const Puck = styled(Box)<PuckProps>`
   position: absolute;
-  top: ${({ $puckLocation: $objectLocation }) => $objectLocation.y}px;
-  left: ${({ $puckLocation: $objectLocation }) => $objectLocation.y}px;
+  /* top: ${({ $puckLocation: $objectLocation }) => $objectLocation.y}px;
+  left: ${({ $puckLocation: $objectLocation }) => $objectLocation.y}px; */
   width: ${PUCK_DIMENSIONS}px;
   height: ${PUCK_DIMENSIONS}px;
   background-color: black;
