@@ -17,7 +17,7 @@ import { NoUser } from "../../components/NoUser";
 
 export const Game = () => {
   const [playGame, setPlayGame] = useState(false);
-  const [gamesPlayed, setGamesPlayed] = useState(0);
+  const [isFirstGame, setIsFirstGame] = useState(true);
   const [gameBoxDimensions, setGameBoxDimensions] = useState<DOMRect>();
   const [puckPosition, setPuckPosition] = useState<Coordinates>(
     INITIAL_PUCK_POSITION
@@ -44,7 +44,7 @@ export const Game = () => {
     if (playGame) return;
     setUserInteractionResult(null);
     setPlayGame(true);
-    setGamesPlayed(gamesPlayed + 1);
+    setIsFirstGame(false);
   }, startGameIn);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export const Game = () => {
         result = { text: "Wrong Key", success: false };
       }
 
-      if (!playGame && !gamesPlayed) {
+      if (!playGame && !isFirstGame) {
         result = { text: "Too Soon", success: false };
       } else if (!playGame) {
         result = { text: "Too Late", success: false };
@@ -109,7 +109,7 @@ export const Game = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [gamesPlayed, puckDirection, playGame]);
+  }, [isFirstGame, puckDirection, playGame]);
 
   if (!user) return <NoUser />;
 
