@@ -2,10 +2,15 @@
 
 ## Installation
 
-Clone the repo, install the packages under the `/client` and `/server` folders.
-You might need to contact me so I can send you some environment variables in order to make it work.
-After installing, run `node server` on the `/server` and `npm run dev` on the `/client`.
-The server should run at `http://localhost:3001` and the client code is aware of it.
+1. Clone the repository.
+2. Install packages:
+   - In `/server`, run `npm install`.
+   - In `/client`, run `npm install`.
+3. Request environment variables (contact me).
+4. Start the app: - In `/server`, run `node server`. - In `/client`, run `npm run dev`.
+
+   Server will be available at `http://localhost:3001`
+   Client will be available at `http://localhost:5173/`
 
 ## How to play
 
