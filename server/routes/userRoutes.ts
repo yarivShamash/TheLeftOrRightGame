@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.post("/user", userController.saveName);
 
+router.post("/addOnePoint", userController.addPointToUser);
+
 export default router;

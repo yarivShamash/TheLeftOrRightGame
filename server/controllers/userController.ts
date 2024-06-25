@@ -28,7 +28,7 @@ const saveName = async (req: Request, res: Response) => {
       JSON.stringify(randomuserResponse.data)
     ).results[0];
 
-    await db.collection("users").add({
+    const userResponse = await db.collection("users").add({
       name,
       gender,
       email,
@@ -39,7 +39,12 @@ const saveName = async (req: Request, res: Response) => {
       picture,
       points: 0,
     });
-    res.status(200).json({ message: "Name saved successfully" });
+
+    const userDoc = await userResponse.get();
+
+    const userData = userDoc.data();
+
+    res.status(200).json({ user: userData });
   } catch (error) {
     console.error("Error saving name:", error);
     res.status(500).json({ error: "Failed to save name" });
