@@ -24,6 +24,13 @@ export const SubmitButton = styled.input`
   padding: 1rem;
   background: #00ff56;
   color: #f600ff;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    background: grey;
+    color: white;
+  }
 `;
 
 export const LoadingTitle = styled.h3`

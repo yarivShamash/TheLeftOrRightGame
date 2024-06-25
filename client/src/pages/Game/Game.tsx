@@ -13,6 +13,7 @@ import {
 import { GameArea, GameContainer, GameTitle } from "./styles";
 import { Coordinates, PuckDirection, UserInteractionResult } from "./types";
 import { getPuckDirection, randomizeCoordinates } from "./utils";
+import { NoUser } from "../../components/NoUser";
 
 export const Game = () => {
   const [playGame, setPlayGame] = useState(false);
@@ -26,7 +27,7 @@ export const Game = () => {
   const [userInteractionResult, setUserInteractionResult] =
     useState<UserInteractionResult | null>(null);
 
-  const { addPointToUser } = useUser();
+  const { addPointToUser, user } = useUser();
 
   const gameBoxRef = useRef<HTMLDivElement>(null);
 
@@ -109,6 +110,8 @@ export const Game = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [gamesPlayed, puckDirection, playGame]);
+
+  if (!user) return <NoUser />;
 
   return (
     <GameContainer>
