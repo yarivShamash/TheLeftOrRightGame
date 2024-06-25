@@ -51,4 +51,22 @@ const saveName = async (req: Request, res: Response) => {
   }
 };
 
-export default { saveName };
+const addPointToUser = async (req: Request, res: Response) => {
+  const { id }: User = req.body;
+  console.log("🚀 > addUserSuccess > id:", id);
+
+  try {
+    await db
+      .collection("users")
+      .doc(id)
+      .update({
+        points: admin.firestore.FieldValue.increment(1),
+      });
+    res.status(200).json({ message: "One point added to user" });
+  } catch (error) {
+    console.error("Error adding one point to user:", error);
+    res.status(500).json({ error: "Failed to add one point to user" });
+  }
+};
+
+export default { saveName, addPointToUser };
