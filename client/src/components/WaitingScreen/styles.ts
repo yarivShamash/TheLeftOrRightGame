@@ -1,20 +1,9 @@
-import { Box, Container, Heading } from "@radix-ui/themes";
+import { Box, Heading } from "@radix-ui/themes";
 import styled from "styled-components";
 
 interface ResultBannerProps {
   $success: boolean;
 }
-
-export const WaitingScreenContainer = styled(Container)`
-  flex: 1;
-  justify-content: center;
-`;
-
-export const WaitingText = styled(Heading)`
-  font-size: 2rem;
-  background: transparent;
-  color: white;
-`;
 
 export const ResultBanner = styled(Box)<ResultBannerProps>`
   position: fixed;
