@@ -1,14 +1,13 @@
 import { FormEventHandler } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
-import { FormContainer } from "./styles";
+import { FormContainer, Input, LoadingTitle, SubmitButton } from "./styles";
 import { UserForm } from "./types";
 import { useUser } from "../../providers/UserProvider";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const { loading, user, getUser } = useUser();
-  console.log("🚀 > Home > user:", user);
+  const { loading, getUser } = useUser();
 
   const handleSubmit: FormEventHandler<UserForm> = async (e) => {
     e.preventDefault();
@@ -25,11 +24,11 @@ export const Home = () => {
   return (
     <FormContainer onSubmit={handleSubmit}>
       {loading ? (
-        <h3>LOADING..</h3>
+        <LoadingTitle>LOADING..</LoadingTitle>
       ) : (
         <>
-          <input placeholder="What's your name?" type="text" name="name" />
-          <input type="submit" value="START" />
+          <Input placeholder="Hey, what's your name?" type="text" name="name" />
+          <SubmitButton type="submit" value="START" />
         </>
       )}
     </FormContainer>

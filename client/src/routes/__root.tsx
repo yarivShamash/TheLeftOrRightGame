@@ -10,6 +10,7 @@ export const PageContainer = styled(Flex)`
   inset: 0;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(to bottom, #4e5da0, #010513);
 `;
 
 export const Route = createRootRoute({

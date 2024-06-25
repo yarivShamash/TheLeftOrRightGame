@@ -14,7 +14,7 @@ export const WaitingScreen = ({
   userInteractionResult,
 }: WaitingScreenProps) => (
   <WaitingScreenContainer>
-    <WaitingText>Wait for it </WaitingText>
+    <WaitingText>Wait for it...</WaitingText>
     {userInteractionResult?.text && (
       <ResultBanner $success={userInteractionResult.success}>
         <ResultText>{userInteractionResult.text}</ResultText>

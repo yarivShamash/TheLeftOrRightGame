@@ -6,7 +6,6 @@ interface ResultBannerProps {
 }
 
 export const WaitingScreenContainer = styled(Container)`
-  background-color: pink;
   flex: 1;
   justify-content: center;
 `;
@@ -14,6 +13,7 @@ export const WaitingScreenContainer = styled(Container)`
 export const WaitingText = styled(Heading)`
   font-size: 2rem;
   background: transparent;
+  color: white;
 `;
 
 export const ResultBanner = styled(Box)<ResultBannerProps>`
