@@ -23,7 +23,7 @@ export const Home = () => {
 
     try {
       await getUser(userName);
-      navigate({ to: "/game" });
+      // navigate({ to: "/game" });
     } catch (error) {
       console.error("error getting user:", error);
     }
