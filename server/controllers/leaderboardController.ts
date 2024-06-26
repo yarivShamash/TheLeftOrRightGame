@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import admin from "firebase-admin";
 
 import { firebaseConfig } from "../config/firebaseConfig";
-// import User from "server/models/userModel";
 
 if (!admin.apps.length) {
   admin.initializeApp(firebaseConfig);

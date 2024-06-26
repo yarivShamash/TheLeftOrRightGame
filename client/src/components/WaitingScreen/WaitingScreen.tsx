@@ -1,5 +1,6 @@
-import { UserInteractionResult } from "../../pages/Game/types";
+import { UserInteractionResult } from "../GameBox/types";
 import { MessageScreen } from "../MessageScreen";
+
 import { ResultBanner, ResultText } from "./styles";
 
 interface WaitingScreenProps {
