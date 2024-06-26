@@ -12,7 +12,7 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-const saveUser = async (req: Request, res: Response) => {
+export const saveUser = async (req: Request, res: Response) => {
   const { name }: User = req.body;
 
   try {
@@ -52,7 +52,7 @@ const saveUser = async (req: Request, res: Response) => {
   }
 };
 
-const addPointToUser = async (req: Request, res: Response) => {
+export const addPointToUser = async (req: Request, res: Response) => {
   const { id }: User = req.body;
 
   try {
@@ -68,5 +68,3 @@ const addPointToUser = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to add one point to user" });
   }
 };
-
-export default { saveName: saveUser, addPointToUser };

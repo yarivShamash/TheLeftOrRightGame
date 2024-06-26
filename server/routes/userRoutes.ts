@@ -1,10 +1,10 @@
 import express from "express";
-import userController from "../controllers/userController";
+import { saveUser, addPointToUser } from "../controllers";
 
 const userRouter = express.Router();
 
-userRouter.post("/user", userController.saveName);
+userRouter.post("/user", saveUser);
 
-userRouter.post("/addOnePoint", userController.addPointToUser);
+userRouter.post("/addOnePoint", addPointToUser);
 
 export default userRouter;

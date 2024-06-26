@@ -10,7 +10,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import express from "express";
 import cors from "cors";
-import { userRouter, leaderboardRouter } from "../../server/routes/";
+import { userRoutes, leaderboardRoutes } from "../../server/routes/";
 import { firebaseConfig } from "../../server/config/firebaseConfig";
 import admin from "firebase-admin";
 
@@ -20,7 +20,7 @@ admin.initializeApp(firebaseConfig);
 
 app.use(cors());
 app.use(express.json());
-app.use(userRouter);
-app.use(leaderboardRouter);
+app.use(userRoutes);
+app.use(leaderboardRoutes);
 
 export const api = onRequest(app);

@@ -1,8 +1,8 @@
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
 
-import userRoutes from "./routes/userRoutes";
-import leaderboardRoutes from "./routes/leaderboardRoutes";
+import { userRoutes, leaderboardRoutes } from "./routes";
+
 import { SERVER_LOCAL_PORT } from "./consts";
 
 const app: Application = express();

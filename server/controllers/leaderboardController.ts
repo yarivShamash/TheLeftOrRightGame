@@ -9,7 +9,7 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-const getLeaderboard = async (_req: Request, res: Response) => {
+export const getLeaderboard = async (_req: Request, res: Response) => {
   try {
     const usersResponse = await db.collection("users");
     const leaderboardResponse = await db.collection("leaderboard");
@@ -34,5 +34,3 @@ const getLeaderboard = async (_req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to save name" });
   }
 };
-
-export default { getLeaderboard };
