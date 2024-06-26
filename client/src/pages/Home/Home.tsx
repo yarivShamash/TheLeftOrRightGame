@@ -1,12 +1,12 @@
 import { FormEventHandler, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+// import { useNavigate } from "@tanstack/react-router";
 
 import { FormContainer, Input, LoadingTitle, SubmitButton } from "./styles";
 import { UserForm } from "./types";
 import { useUser } from "../../providers/UserProvider";
 
 export const Home = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { loading, getUser } = useUser();
   const [userName, setUserName] = useState("");
 
