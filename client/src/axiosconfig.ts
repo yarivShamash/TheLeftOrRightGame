@@ -7,7 +7,7 @@ const isLocalEnv = pageUrl.includes("localhost");
 const api = axios.create({
   baseURL: isLocalEnv
     ? `http://localhost:${SERVER_LOCAL_PORT}`
-    : `${pageUrl}/api`,
+    : `${pageUrl}api`,
 });
 
 export default api;
