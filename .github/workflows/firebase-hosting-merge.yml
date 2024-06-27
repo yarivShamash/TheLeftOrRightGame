@@ -11,10 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Get Firebase Hosting URL
-        id: get_hosting_url
-        run: |
-          echo "FIREBASE_HOSTING_URL=$(firebase hosting:channel:deploy your-channel-name --json | jq -r '.hosting.site')" >> $GITHUB_OUTPUT
       - name: Build frontend app
         working-directory: client
         run: |
