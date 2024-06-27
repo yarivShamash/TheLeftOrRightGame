@@ -1,16 +1,19 @@
 import cors from "cors";
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
+import { onRequest } from "firebase-functions/v2/https";
 
-import userRoutes from "./routes/userRoutes";
-import leaderboardRoutes from "./routes/leaderboardRoutes";
+import { userRoutes, leaderboardRoutes } from "./routes";
+
 import { SERVER_LOCAL_PORT } from "./consts";
 
 const app: Application = express();
 const port = SERVER_LOCAL_PORT;
 
+const environment = process.env.NODE_ENV || "development";
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: "Content-Type,Authorization",
   })
@@ -20,10 +23,10 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(leaderboardRoutes);
 
-app.get("/", (_req: Request, res: Response) => {
-  res.send("Hello from Express & TypeScript!");
-});
+export const api = onRequest(app);
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+if (environment === "development") {
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
+}

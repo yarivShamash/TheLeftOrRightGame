@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
 import dotenv from "dotenv";
+import admin from "firebase-admin";
 
 import { ServiceAccount, credential } from "firebase-admin";
 
@@ -16,4 +16,6 @@ export const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
-initializeApp(firebaseConfig);
+if (!admin.apps.length) {
+  admin.initializeApp(firebaseConfig);
+}
