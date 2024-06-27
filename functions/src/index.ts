@@ -16,7 +16,9 @@ import admin from "firebase-admin";
 
 const app: express.Application = express();
 
-admin.initializeApp(firebaseConfig);
+if (!admin.apps.length) {
+  admin.initializeApp(firebaseConfig);
+}
 
 app.use(cors());
 app.use(express.json());
